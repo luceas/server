@@ -80,6 +80,7 @@ use OC\Files\Mount\ObjectHomeMountProvider;
 use OC\Files\Node\HookConnector;
 use OC\Files\Node\LazyRoot;
 use OC\Files\Node\Root;
+use OC\Files\Storage\StorageFactory;
 use OC\Files\View;
 use OC\Http\Client\ClientService;
 use OC\IntegrityCheck\Checker;
@@ -133,6 +134,7 @@ use OCP\Federation\ICloudFederationProviderManager;
 use OCP\Federation\ICloudIdManager;
 use OCP\Authentication\LoginCredentials\IStore;
 use OCP\Files\NotFoundException;
+use OCP\Files\Storage\IStorageFactory;
 use OCP\GlobalScale\IConfig;
 use OCP\ICacheFactory;
 use OCP\IDBConnection;
@@ -1172,6 +1174,10 @@ class Server extends ServerContainer implements IServerContainer {
 		});
 		$this->registerAlias(IContactsStore::class, ContactsStore::class);
 
+		$this->registerService(IStorageFactory::class, function() {
+			return new StorageFactory();
+		});
+
 		$this->connectDispatcher();
 	}
 
@@ -2019,5 +2025,12 @@ class Server extends ServerContainer implements IServerContainer {
 	 */
 	public function getRemoteInstanceFactory() {
 		return $this->query(IInstanceFactory::class);
+	}
+
+	/**
+	 * @return IStorageFactory
+	 */
+	public function getStorageFactory() {
+		return $this->query(IStorageFactory::class);
 	}
 }
