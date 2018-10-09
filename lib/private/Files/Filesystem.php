@@ -831,7 +831,10 @@ class Filesystem {
 			'/\/\.$/s',         // remove trailing /.
 		];
 
-		$path = preg_replace($patterns, '/', $path);
+		do {
+			$count = 0;
+			$path = preg_replace($patterns, '/', $path, -1, $count);
+		} while ($count > 0);
 
 		//remove trailing slash
 		if ($stripTrailingSlash && strlen($path) > 1) {
