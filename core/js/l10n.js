@@ -71,7 +71,7 @@ OC.L10N = {
 			this._bundles[appName] = bundle || {};
 
 			// generate plural function based on form
-			this._pluralFunctions[appName] = this._getPlurar;
+			this._pluralFunctions[appName] = this._getPlural;
 		} else {
 			// Theme overwriting the default language
 			_.extend(self._bundles[appName], bundle);
@@ -166,7 +166,7 @@ OC.L10N = {
 	 * @returns {number}
 	 * @private
 	 */
-	_getPlurar: function(number) {
+	_getPlural: function(number) {
 		locale = OC.getLocale();
 		if ('pt_BR' === locale) {
 			// temporary set a locale for brazilian
